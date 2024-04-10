@@ -1,0 +1,76 @@
+" souringing text with _
+vnoremap s" c"<C-r>""
+vnoremap s' c'<C-r>"'
+vnoremap s` c`<C-r>"`
+vnoremap s( c(<C-r>")
+vnoremap s[ c[<C-r>"]
+vnoremap s{ c{<C-r>"}
+vnoremap s* c*<C-r>"*
+vnoremap s= c=<C-r>"=
+vnoremap s~ c~<C-r>"~
+
+" insert cursor movement
+inoremap <c-b> <Esc>O
+inoremap <c-f> <Esc>A<Enter>
+nnoremap <leader>Dd :call Debug()<CR>
+
+"tab moving
+tmap <silent> <c-t>N <c-w>:tabnew<CR>
+nmap <silent> <c-t>N :tabnew<CR>
+tnoremap <silent> <c-t>n <c-w>:tabnext<CR>
+tnoremap <silent> <c-t>p <c-w>:tabprev<CR>
+nnoremap <silent> <c-t>n :tabnext<CR>
+nnoremap <silent> <c-t>p :tabprev<CR>
+nnoremap <leader>W :w!<CR>
+
+" help registers
+vnoremap <c-c> "+y | call system('xclip -selection clipboard -i', @0)
+
+" run test programs
+nnoremap <leader>rt :bel split \| set norelativenumber \| set nonumber \| term runtst %:p:h<CR> \| :normal Gi<CR>
+
+" quick search and replace
+nnoremap <leader>s ye*Ncgn
+
+" quick save buffer
+nnoremap <leader>W :w!<CR>
+
+" quick quit window
+nnoremap <c-w>q :q!<CR>
+nnoremap / :set hlsearch<cr>/
+
+" tab chaning
+tmap <silent> <c-t>N <c-w>:tabnew<CR>
+nmap <silent> <c-t>N :tabnew<CR>
+tnoremap <silent> <c-t>n <c-w>:tabnext<CR>
+tnoremap <silent> <c-t>p <c-w>:tabprev<CR>
+nnoremap <silent> <c-t>n :tabnext<CR>
+nnoremap <silent> <c-t>p :tabprev<CR>
+
+" how should cases be handled when searching?
+nnoremap <silent> <c-S> :set smartcase!<CR>:set smartcase?<CR>
+nnoremap <silent> <c-I> :set ignorecase!<cr>:set ignorecase?<cr>
+
+" show list (period for spaces, etc)
+nnoremap <leader>l :set list!<CR>
+
+" move a block of code as one
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" when going through searches, keep cursor in the middle
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" clear highlights when searching
+" nnoremap <silent> <leader><CR> :g:/\(./\|\n/\)/\@!<CR>:echo "searches cleared"<CR>
+"
+" clear highlights when searching
+nnoremap <silent> <leader>h :set hlsearch!<cr>
+
+" makes the current file executable
+"
+function Execute()
+endfunction
+
+nnoremap <silent> <leader>x :!python %<cr>

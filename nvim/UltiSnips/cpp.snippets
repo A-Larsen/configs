@@ -1,0 +1,197 @@
+snippet meta
+/* ---------------------------------------------------------------------------
+ * author:   Austin Larsen
+ * synopsis: $1
+ * date:     ${2:`date`} 
+ * ---------------------------------------------------------------------------
+ *
+ * $0
+ */
+endsnippet
+
+snippet tstruct
+typedef struct _$1 {
+	$2
+} $1;
+endsnippet
+
+snippet maina
+int
+main(int argc, char **argv){
+	$1
+}
+endsnippet
+
+snippet main
+int
+main(){
+	$1
+}
+endsnippet
+
+snippet defhead
+#ifndef $1_H
+#define $1_H
+
+$2 // $1
+
+#endif
+endsnippet
+
+snippet fori
+for(int i = $1; i < $2; ++i){
+	$3
+}
+endsnippet
+
+snippet for
+for($1; $2; $3){
+	$4
+}
+endsnippet
+
+snippet inc<
+#include <$1.h>
+endsnippet
+
+snippet incq
+#include "$1.h"
+endsnippet
+
+snippet malloc
+$1 *${2:a} = malloc($3);
+
+$4
+
+free($2);
+endsnippet
+
+snippet switch
+switch($1){
+	$2
+}
+endsnippet
+
+snippet case 
+case ${1:0}: {
+	$2
+	break;
+}
+endsnippet
+
+snippet casev
+case ${1:0}: $2 break;
+endsnippet
+
+snippet printfa
+printf("$1", $2);
+endsnippet
+
+snippet DEF
+#define $1
+endsnippet
+# snippet /*
+# /* $1
+# */
+# endsnippet
+
+snippet /*
+/* $1
+ */
+endsnippet
+
+snippet /*v
+/* $1 */
+endsnippet
+
+snippet }elseif
+}else if($1){
+	$2
+}
+endsnippet
+
+snippet strcmp0
+strcmp($1, $2) == 0
+endsnippet
+
+snippet ifstrcmp0
+if(strcmp($1, $2) == 0){
+	$3
+}
+endsnippet
+
+# string literal
+snippet strcmpl0
+strcmp($1, "$2") == 0
+endsnippet
+
+snippet ifstrcmpl0
+if(strcmp($1, "$2") == 0){
+	$3
+}
+endsnippet
+
+snippet chararr
+char $1[] = {
+	$3,
+};
+endsnippet
+
+snippet do
+do {
+	$3
+}while($2);
+endsnippet
+
+snippet defaultv
+default: $2 break;
+endsnippet
+
+snippet default
+default: {
+	$1
+	break;
+}$2
+endsnippet
+
+snippet printf
+printf("$1");
+endsnippet
+
+snippet puts
+puts("$1");
+endsnippet
+
+
+snippet func
+${1:void} $2($3)
+$4
+{
+	$5
+}
+endsnippet
+
+snippet while
+while($1){
+	$2
+}
+endsnippet
+
+snippet perr
+fprintf(stderr, "$1");
+endsnippet
+
+snippet #if
+#if $1
+#endif
+endsnippet
+
+snippet if
+if($1){
+	$2
+}
+endsnippet
+
+# snippet *p
+# ($1);
+# endsnippet

@@ -1,0 +1,7 @@
+= nvim configuration files
+Yes most of this is just from _The Primeagen's_ config. I had a custom vim
+config before neovim and knew I had to update to neovim and lsp.
+
+== Links
+- https://www.youtube.com/watch?v=EOWPb7Id1d4&t=354s[Developing in Windows]
+- https://www.youtube.com/watch?v=w7i4amO_zaE&t=908s[The Primeagen]

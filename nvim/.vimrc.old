@@ -1,0 +1,364 @@
+" https://spf13.com/post/perfect-vimrc-vim-config-file/
+"
+call plug#begin('~/.config/nvim/.vim/plugged')
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-commentary'
+" Plug 'ycm-core/YouCompleteMe'
+Plug 'SirVer/ultisnips'
+Plug 'preservim/nerdtree'
+Plug 'morhetz/gruvbox' 
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } 
+Plug 'junegunn/fzf.vim' 
+" Plug 'vim-utils/vim-man' 
+" Plug 'vim-syntastic/syntastic' 
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+"Plug 'vimwiki/vimwiki'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-fugitive'
+Plug 'itchyny/vim-gitbranch'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'jceb/vim-orgmode'
+Plug 'inkarkat/vim-SyntaxRange'
+Plug 'vim-scripts/utl.vim'
+Plug 'tpope/vim-speeddating'
+" Plug 'itchyny/calendar.vim'
+Plug 'mattn/calendar-vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'habamax/vim-asciidoctor'
+" Plug 'wsdjeg/vim-asciidoc' " this might have better syntax highlighting <-- NOPE
+Plug 'dense-analysis/ale'
+"Plug 'aquach/vim-mediawiki-editor'
+Plug 'chikamichi/mediawiki.vim'
+Plug 'rhysd/vim-grammarous'
+Plug 'p00f/nvim-ts-rainbow'
+Plug 'altercation/vim-colors-solarized'
+
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+
+" Plug 'm-pilia/vim-mediawiki'
+call plug#end()
+let g:deoplete#enable_at_startup = 1
+
+set conceallevel=3
+
+let g:hilines_idx = -1
+let g:alpha = 'abcdefghijklmnopqrstuvwxyz'
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
+" Plugin settings
+" let g:vim_mediawiki_site = 'localhost'
+" let g:vim_mediawiki_browser_command = "firefox \r"
+
+" let NERDTreeIgnore = ['\.pyc$', '__pycache__', '.git', '\.o']
+let g:asciidoctor_fenced_languages = ['python', 'c', 'javascript', 'sql', 'bash', 'diff', 'vim', 'asciidoc', 'cpp', 'nasm', 'yaml']
+
+" Fold sections, default `0`.
+let g:asciidoctor_folding = 1
+" Fold options, default `0`.
+let g:asciidoctor_fold_options = 1
+
+" Conceal *bold*, _italic_, `code` and urls in lists and paragraphs, default `0`.
+" See limitations in end of the README
+let g:asciidoctor_syntax_conceal = 1
+
+" Highlight indented text, default `1`.
+let g:asciidoctor_syntax_indented = 0
+
+let NERDTreeIgnore = ['\.pyc$', '__pycache__', '.git']
+let g:NERDTreeWinPos = 'right'
+let NERDTreeMinimalUI=1
+
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ 'colorscheme': 'wombat',
+\ }
+
+
+" cursor
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+" line numbers
+set relativenumber
+set number
+ set cursorline
+
+" tabline
+set showtabline=2
+set laststatus=2 " makes lightline show up
+
+" Syntax
+syntax on
+" colorscheme gruvbox
+" colorscheme gruvbox
+" set background=dark
+
+" color changes
+" highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE
+" highlight SpecialKey ctermfg=66 guifg=#649A9A " color for listchars
+highlight Normal guibg=NONE ctermbg=NONE " enables transparency
+
+" tabkey
+" set tabstop=4
+" set softtabstop=0 
+" set noexpandtab
+" set shiftwidth=4
+set foldcolumn=1
+
+" https://stackoverflow.com/questions/1878974/redefine-tab-as-4-spaces
+" four actual space characters for tab
+" set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+
+set nowrap
+
+" list (show space, tab newline, EOL, etc characters)
+set list
+set listchars=tab:>.,trail:.,extends:\#,nbsp:. " Highlight problematic whitespace
+
+" searching
+set hlsearch
+set incsearch
+
+" directory for swap files
+set directory=/tmp
+
+set textwidth=80
+
+" so there is no eching in bottom right corner
+set noshowcmd
+
+set backupdir=/tmp/
+
+
+" functions
+function Debug()
+	packadd termdebug
+	Termdebug
+endfunction
+
+" function NewMan()
+" 	let l:find = expand("<cword>")
+" 	exec 'Man '.l:find
+" endfunction
+
+
+function JavascriptMode()
+	" with this you can auto complete javascript
+	" syntaxes with '<C-x><C-o>'
+	set omnifunc=javascriptcomplete#CompleteJS
+endfunction
+
+function HtmlMode()
+	call SyntaxRange#Include('<lua>', '</lua>', 'lua', 'WildMenu')
+endfunction
+
+function OrgMode()
+	call SyntaxRange#Include('#+BEGIN_SRC sql', '#+END_SRC', 'sql', 'WildMenu')
+	call SyntaxRange#Include('#+BEGIN_SRC nasm', '#+END_SRC', 'nasm', 'WildMenu')
+	call SyntaxRange#Include('#+BEGIN_SRC bash', '#+END_SRC', 'bash', 'WildMenu')
+	call SyntaxRange#Include('#+BEGIN_SRC make', '#+END_SRC', 'make', 'WildMenu')
+	call SyntaxRange#Include('#+BEGIN_SRC c', '#+END_SRC', 'c', 'WildMenu')
+	let maplocalleader='\\'
+	let maplocalleader='\o'
+	" nnoremap <buffer> <localleader>u :Utl<cr>
+endfunction
+
+function Hi(type, group, line)
+	if g:hilines !=# ''
+		if a:type ==# 'line'
+			let g:hilines .=  '\|'.'\%'.a:line.'l'
+		elseif a:type ==# 'nonWhiteSpace'
+			let g:hilines .=  '\|'.'\(\%'.a:line.'l\&\S\)'
+		endif
+
+	else
+		if a:type ==# 'line'
+			let g:hilines =  '\%'.a:line.'l'
+		elseif a:type ==# 'nonWhiteSpace'
+			let g:hilines =  '\(\%'.a:line.'l\&\S\)'
+		endif
+	endif
+	let g:hilines_idx = g:hilines_idx + 1
+
+	exec 'match '.a:group.' /'.g:hilines.'/'
+	exec 'normal! m'.g:alpha[g:hilines_idx]
+endfunction
+
+
+function ClearHi()
+	exec 'match none'
+	let g:hilines = ''
+	exec 'delmarks a-z'
+endfunction
+
+
+" Mapings
+"
+"		nmap <leader>n 	NerdTree
+"		nmap <leader>D 	Debuging
+"		nmap <c-m>     	WordFixing
+"		vmap s         	surround with
+
+
+let mapleader = ','
+" nnoremap <c-m> ye*Ncgn
+nnoremap <leader>s ye*Ncgn
+nnoremap <silent> <leader><cr> :g:/\(./\|\n/\)/\@!<cr>:echo "searches cleared"<cr>
+
+" surround with
+vnoremap s" c"<C-r>""
+vnoremap s' c'<C-r>"'
+vnoremap s` c`<C-r>"`
+vnoremap s( c(<C-r>")
+vnoremap s[ c[<C-r>"]
+vnoremap s{ c{<C-r>"}
+vnoremap s* c*<C-r>"*
+vnoremap s= c=<C-r>"=
+vnoremap s~ c~<C-r>"~
+
+inoremap <c-b> <Esc>O
+inoremap <c-f> <Esc>A<Enter>
+inoremap <c-v> <Esc>A
+nnoremap <leader>Dd :call Debug()<cr>
+
+" buffers
+nnoremap <leader>Bl :ls<cr>:b
+nnoremap <leader>Fl :e<Space>
+" press q to select an old file
+nnoremap <leader>Bo :browse oldfiles<cr>
+" https://stackoverflow.com/questions/3171284/recent-file-history-in-vim
+" nnoremap <c-x>bn bn<cr>
+" nnoremap <c-x>bp :bp<cr>
+" tnoremap <c-x>bd <c-w>:bd!<cr> nnoremap <c-x>bd :bd!<cr> 
+" NerdTree
+nnoremap <leader>nn :NERDTreeToggle<cr>
+nnoremap <leader>nd :exec 'NERDTree '.getcwd()<cr>
+nnoremap <leader>nf :NERDTreeFind<cr>
+nnoremap <leader>nF :exec 'NERDTree '.bufname()<cr>
+nnoremap <leader>nc :NERDTreeClose<cr>
+nnoremap <leader>nb :NERDTreeFromBookmark<Space>
+nnoremap <c-F>t :set filetype=text<cr>
+
+" FZF
+nnoremap <c-k>f :Files<cr>
+nnoremap <c-k>b :Buffers<cr>
+nnoremap <c-k>h :History<cr>
+nnoremap <c-k>c :Commits<cr>
+nnoremap <c-k>w :Windows<cr>
+" tnoremap <C-x>b <C-w>N:Buffers<cr>
+" tnoremap <C-x><C-f> <C-w>N:Files<cr>
+nnoremap <C-b>n :bn<cr>
+nnoremap <C-b>p :bp<cr>
+
+"tab moving
+tmap <silent> <c-t>N <c-w>:tabnew<cr>
+nmap <silent> <c-t>N :tabnew<cr>
+tnoremap <silent> <c-t>n <c-w>:tabnext<cr>
+tnoremap <silent> <c-t>p <c-w>:tabprev<cr>
+nnoremap <silent> <c-t>n :tabnext<cr>
+nnoremap <silent> <c-t>p :tabprev<cr>
+nnoremap <leader>W :w!<cr>
+" help registers
+vnoremap <c-c> "+y | call system('xclip -selection clipboard -i', @0)
+" vnoremap <c-c> :'<,'>w !xclip -selection clipboard -i<cr>
+" nnoremap <leader>rt :!runtst %:p:h<cr>
+" nnoremap <leader>rt :split | term runtst %:p:h<cr>
+" nnoremap <leader>rt :split \| term runtst %:p:h<cr> \| :normal Gi <cr>
+" nnoremap <leader>rt :bo term runtst %:p:h<cr> \| :normal Gi <cr>
+" nnoremap <leader>rt :bel split \| term runtst %:p:h<cr> \| :normal Gi \| bufdo set norelativelinenumber<cr>
+nnoremap <leader>rt :bel split \| set norelativenumber \| set nonumber \| term runtst %:p:h<cr> \| :normal Gi<cr>
+nnoremap <leader>u :Utl<cr>
+" much rather fource a window to quit then having to manually type this
+nnoremap <c-w>q :q!<cr>
+nnoremap <leader>C :1,$d<cr>:r!
+" smart case is also helpful
+" nnoremap <silent> <c-I> :set ignorecase!<cr>:set ignorecase?<cr>
+nnoremap <silent> <c-S> :set smartcase!<cr>:set smartcase?<cr>
+nnoremap <silent> zT zt<c-y><c-y><c-y><c-y><c-y>
+nnoremap <silent> zB zb<c-e><c-e><c-e><c-e><c-e>
+
+" set ttymouse=urxvt
+" set ttymouse=xterm2
+" set ttymouse=sgr
+set mouse=a
+
+if $TERM ==# 'linux' || $TERM ==# 'screen'
+	color pablo
+	" set background=light
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ 'colorscheme': 'solarized',
+\ }
+
+
+	highlight CursorLine cterm=NONE ctermbg=darkblue ctermfg=NONE
+	highlight StatusLine ctermbg=darkblue
+endif
+
+colorscheme gruvbox
+" colorscheme solarized
+"
+" Alacritty theme start
+" colorscheme default
+hi clear CursorLine
+hi clear CursorLineNr
+hi Comment ctermfg=8
+" hi SpecialKey ctermfg=8 guifg=8
+hi CursorLine ctermbg=16
+set nolist
+nnoremap <leader>l :set list!<cr>
+" hi Folded ctermfg=0 ctermbg=66
+hi Folded ctermfg=0 ctermbg=23
+hi LineNr ctermfg=8
+hi WinSeparator ctermbg=0
+" Alacritty theme end
+"
+" highlight Normal ctermbg=black
+if has('g:GuiLoaded')
+    colorscheme gruvbox
+    call rpcnotify(1, 'Gui', 'Option', 'Tabline', 0)
+	" set guifont=Hack\ 10
+else 
+    highlight Normal guibg=NONE ctermbg=NONE " enables transparency
+endif
+set guioptions=Ace
+" set termguicolors " changes vim color in some way.. ?
+
+
+au BufNewFile,BufRead *.org call OrgMode()
+au BufNewFile,BufRead *.js call JavascriptMode()
+au BufNewFile,BufRead *.html call HtmlMode()
+" au BufNewFile,BufRead *.html set filetype=html
+" au BufNewFile,BufRead *.c :ALEDisable
+" au BufNewFile,BufRead *.h :ALEDisable
+au BufNewFile,BufRead *.wiki set filetype=mediawiki
+au BufNewFile,BufRead *.nasm set filetype=nasm | ALEDisableBuffer
+au BufNewFile,BufRead *.asm set filetype=nasm | ALEDisableBuffer
+au BufNewFile,BufRead *.h set filetype=c
+" below I'm trying to fix syntax highlighting issues
+" with syntax not working correctly on large files
+" autocmd BufEnter * syntax sync fromstart
+" for some strange reason enabling syntax on entering a buffer fixes the issue.
+" maybe treesitter isn't being enabled on some files? IDK.
+autocmd BufEnter * syntax on
+hi ErrorMsg ctermfg=white
+" call SyntaxRange#Include('CUSTOM_START', 'CUSTOM_END', 'nosyntax', 'WildMenu')
